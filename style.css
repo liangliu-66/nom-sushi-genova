@@ -1,0 +1,428 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #faf9f6;        
+    --card-bg: #ffffff;
+    --text-color: #1a1a1a;
+    --text-muted: #666666;
+    --accent-color: #009245;    
+    --accent-hover: #007637;
+    --dark-accent: #111111;
+    --border-color: #eaeaea;
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* SFONDO MOBILE (ARIANO, NON CAOTICO) */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 140px;
+    height: 100%;
+    background-image: 
+        url('foglia6.png'), 
+        url('foglia7.png');
+    background-size: 110px auto, 120px auto;
+    background-repeat: no-repeat;
+    background-position: left -30px top 120px, left -40px top 700px;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    display: none; 
+}
+
+/* SFONDO DESKTOP (PULITO SENZA SOVRAPPOSIZIONI) */
+@media (min-width: 768px) {
+    body::before {
+        width: 250px;
+        background-image: 
+            url('foglia6.png'), 
+            url('foglia3.png');
+        background-size: 210px auto, 180px auto;
+        background-repeat: repeat-y;
+        background-position: left -30px top 100px, left -20px top 900px;
+        opacity: 0.20;
+    }
+
+    body::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background-image: 
+            url('foglia7.png'), 
+            url('foglia6.png');
+        background-size: 190px auto, 210px auto;
+        background-repeat: repeat-y;
+        background-position: right -30px top 350px, right -20px top 1150px;
+        opacity: 0.20;
+        pointer-events: none;
+        z-index: 0;
+    }
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* HEADER FISSO */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(250, 249, 246, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+    padding: 14px 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-title {
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    color: var(--dark-accent);
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--dark-accent);
+    border-radius: 2px;
+}
+
+/* MENU A TENDINA */
+.nav-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 220px;
+    background-color: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: none;
+}
+
+.nav-dropdown.active {
+    display: block;
+}
+
+.nav-dropdown ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* PRESENTAZIONE & LOGO */
+.section {
+    padding: 40px 0;
+}
+
+.hero {
+    padding-top: 110px;
+    text-align: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.main-logo {
+    max-width: 440px;
+    width: 85%;
+    height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    display: block;
+}
+
+.hero-description {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 650px;
+    margin: 0 auto 30px auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.feature-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+.feature-card .icon {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* TITOLI SEZIONE RIDOTTI DI 1/3 */
+.section-title {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 18px;
+    font-weight: 700;
+}
+
+.section-title span {
+    color: var(--accent-color);
+}
+
+.buttons-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+
+.btn-xl {
+    padding: 20px 24px;
+    font-size: 1.05rem;
+    width: 100%;
+}
+
+.btn-lg {
+    padding: 15px 20px;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.btn-menu {
+    background-color: #ffffff;
+    color: var(--dark-accent);
+    border: 2px solid var(--dark-accent);
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+.btn-primary {
+    background-color: var(--dark-accent);
+    color: #ffffff;
+}
+
+.btn-outline {
+    background-color: #ffffff;
+    color: var(--dark-accent);
+    border: 2px solid var(--accent-color);
+}
+
+.btn-outline-dark {
+    background-color: transparent;
+    color: var(--dark-accent);
+    border: 2px solid var(--border-color);
+}
+
+.btn-outline-sm {
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: #ffffff;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* DOVE SIAMO & CONTATTI */
+.location-section {
+    text-align: center;
+}
+
+.location-info {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(4px);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.phone-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* POPUP MODALE */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 30px 22px;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* FOOTER */
+.footer {
+    border-top: 1px solid var(--border-color);
+    padding: 35px 0;
+    text-align: center;
+    background-color: #ffffff;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 1;
+}
+
+.social-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a {
+    color: var(--dark-accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* RESPONSIVE DESKTOP */
+@media (min-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .main-logo {
+        max-width: 520px;
+    }
+    .section-title {
+        font-size: 1.3rem;
+    }
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NØM – Sushi Vibes | Genova</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS Standard (con versione anti-cache) -->
+    <link rel="stylesheet" href="style.css?v=2.3">
+</head>
+<body>
+
+    <!-- Header Fisso (Solo Menu a Tendina) -->
+    <header class="header">
+        <div class="container header-container">
+            <span class="header-title">NØM SUSHI VIBES</span>
+            
+            <button class="hamburger" id="hamburger-btn" aria-label="Apri menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav-dropdown" id="nav-dropdown">
+                <ul>
+                    <li><a href="#menu" class="nav-link">Menu Digitali</a></li>
+                    <li><a href="#booking" class="nav-link">Prenota Tavolo</a></li>
+                    <li><a href="#delivery" class="nav-link">Ordina Online</a></li>
+                    <li><a href="#location" class="nav-link">Dove Siamo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- INTRODUZIONE CON LOGO GRANDE IN PRIMO PIANO -->
+    <section id="about" class="hero section">
+        <div class="container hero-content">
+            <div class="logo-wrapper">
+                <img src="logo.png" alt="NØM Sushi Vibes Logo" class="main-logo">
+            </div>
+            
+            <p class="hero-description">
+                Da NØM uniamo la tradizione giapponese con influenze contemporanee. Materie prime freschissime, cura nei dettagli e un'atmosfera chic pensata per farti vivere serate indimenticabili nel cuore di Genova.
+            </p>
+            
+            <div class="features-grid">
+                <!-- Card All You Can Eat -->
+                <div class="feature-card">
+                    <div class="icon">🍱</div>
+                    <h3>All You Can Eat</h3>
+                    <p>Formula ricca e di altissima qualità sia a pranzo che a cena.</p>
+                    <button class="btn btn-outline-sm" id="open-prices-modal" style="margin-top: 10px;">Prezzi</button>
+                </div>
+
+                <!-- Card Alla Carta -->
+                <div class="feature-card">
+                    <div class="icon">🍣</div>
+                    <h3>Alla Carta</h3>
+                    <p>Una selezione esclusiva di roll speciali, sashimi e piatti gourmet.</p>
+                </div>
+
+                <!-- Card Cocktail Lounge -->
+                <div class="feature-card">
+                    <div class="icon">🍸</div>
+                    <h3>Cocktail Lounge</h3>
+                    <p>Drink ricercati studiati per abbinarsi perfettamente al nostro sushi.</p>
+                    <button class="btn btn-outline-sm" id="open-aperi-modal" style="margin-top: 10px;">Aperisushi</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU DIGITALI (PULSANTI DEDICATI E GRANDI) -->
+    <section id="menu" class="section">
+        <div class="container">
+            <h2 class="section-title">I Nostri <span>Menu Digitali</span></h2>
+            <div class="buttons-stack">
+                <a href="pdf/menu-pranzo.pdf" target="_blank" class="btn btn-xl btn-menu">
+                    MENU PRANZO
+                </a>
+                <a href="pdf/menu-cena.pdf" target="_blank" class="btn btn-xl btn-menu btn-accent">
+                    MENU CENA
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRENOTAZIONE TAVOLO -->
+    <section id="booking" class="section">
+        <div class="container">
+            <h2 class="section-title">Prenota il tuo <span>Tavolo</span></h2>
+            <div class="buttons-stack">
+                <a href="https://www.google.com/maps/reserve/v/dine/c/Q1g6drRzly4?source=pa&opi=89978449&hl=it-IT&gei=QSSPavuYKbzsi-gP7fRF&sourceurl=https://www.google.com/search?client%3Dfirefox-b-d%26q%3Dnom%2Bsushi" target="_blank" class="btn btn-xl btn-primary">
+                    RISERVA UN TAVOLO
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ORDINE ONLINE -->
+    <section id="delivery" class="section">
+        <div class="container">
+            <h2 class="section-title">Asporto & <span>Delivery</span></h2>
+            <div class="buttons-stack">
+                <button class="btn btn-xl btn-outline" id="open-delivery-modal">
+                    ORDINA ONLINE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATTI E DOVE SIAMO -->
+    <section id="location" class="section location-section">
+        <div class="container">
+            <div class="location-info">
+                <h2>Contatti & <span>Orari</span></h2>
+                <div class="info-item" style="margin-top: 15px;">
+                    <strong>Indirizzo:</strong>
+                    <p>Via XII Ottobre 192/r, Genova</p>
+                    <button class="btn btn-outline-sm" id="open-map-modal" style="margin-top: 10px;">Vedi su Google Maps</button>
+                </div>
+                <div class="info-item" style="margin-top: 15px;">
+                    <strong>Orari di Apertura:</strong>
+                    <p>Pranzo: 12:00 – 15:00</p>
+                    <p>Cena: 19:00 – 23:30</p>
+                </div>
+                <div class="info-item" style="margin-top: 15px;">
+                    <strong>Telefono:</strong>
+                    <p><a href="tel:+390108600462" class="phone-link">+39 010 860 0462</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POPUP PREZZI ALL YOU CAN EAT -->
+    <div class="modal" id="prices-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-prices-modal">&times;</button>
+            <h3>Prezzi <span>All You Can Eat</span></h3>
+            <div class="modal-info-list" style="text-align: left; margin: 20px 0; font-size: 0.95rem; line-height: 1.8;">
+                <p><strong>PRANZO:</strong> 18,90 €</p>
+                <p><strong>RIDOTTO:</strong> 12,90 €</p>
+                <p><strong>FESTIVI WEEKEND:</strong> 20,90 €</p>
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 10px 0;">
+                <p><strong>CENA:</strong> 32,90 €</p>
+                <p><strong>RIDOTTO:</strong> 17,90 €</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px;">*RIDOTTO: bambini fino a 1,20m</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP APERISUSHI -->
+    <div class="modal" id="aperi-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-aperi-modal">&times;</button>
+            <h3>Formula <span>Aperisushi</span></h3>
+            <p style="font-weight: 700; color: var(--accent-color); font-size: 1.2rem; margin: 10px 0 15px 0;">13,90 €</p>
+            <div class="modal-info-list" style="text-align: left; font-size: 0.9rem; line-height: 1.6;">
+                <p style="margin-bottom: 12px;"><strong>1) 1 Drink + Combo Cucina:</strong><br>
+                <span style="color: var(--text-muted);">Nuvole di drago, edamame, riso cantonese, involtini di primavera, ravioli fritti, alghe wakame, spiedini di pollo.</span></p>
+                
+                <p><strong>2) 1 Drink + Combo Sushi:</strong><br>
+                <span style="color: var(--text-muted);">Nuvole di drago, edamame, gunkan, taco pesto, nigiri misti, hosomaki, uramaki.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP SCELTA PIATTAFORME DELIVERY -->
+    <div class="modal" id="delivery-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-delivery-modal">&times;</button>
+            <h3>Scegli la <span>Piattaforma</span></h3>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Seleziona dove preferisci effettuare il tuo ordine:</p>
+            <div class="modal-buttons">
+                <a href="https://go.ordelivery.shop/#/restaurantPage?string_id=SZPTV" target="_blank" class="btn btn-lg btn-accent">ORDINA CON ORDELIVERY</a>
+                <a href="https://www.justeat.it/restaurants-nom-sushi-vibes-genova/menu?serviceType=collection&utm_source=google&utm_medium=organic&utm_campaign=foodorder" target="_blank" class="btn btn-lg btn-outline-dark">ORDINA CON JUST EAT</a>
+                <a href="https://deliveroo.it/it/menu/genova/genova-centro/nom-sushi-vibes/?fulfillment_type=COLLECTION/" target="_blank" class="btn btn-lg btn-outline-dark">ORDINA CON DELIVEROO</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP MAPPA GOOGLE -->
+    <div class="modal" id="map-modal">
+        <div class="modal-content" style="max-width: 600px; padding: 25px 15px 15px 15px;">
+            <button class="close-modal" id="close-map-modal">&times;</button>
+            <h3 style="margin-bottom: 15px;">Dove <span>Siamo</span></h3>
+            <div class="map-box">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2870.4724778112345!2d8.9372134!3d44.4074495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d343e0e9803bf5%3A0xb696bc28c89420ef!2sVia%20XII%20Ottobre%2C%20192r%2C%2016121%20Genova%20GE!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit" 
+                    width="100%" 
+                    height="320" 
+                    style="border:0; border-radius: 12px;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+            <a href="https://share.google/VQTjgVsflIUEZ5Jcb" target="_blank" class="btn btn-outline-sm" style="margin-top: 15px;">Apri direttamente su App Google Maps</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 NØM Sushi Vibes - Tutti i diritti riservati.</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/nom_sushi/" target="_blank">Instagram</a>
+                <a href="https://www.facebook.com/nomsushi" target="_blank">Facebook</a>
+                <a href="https://share.google/VQTjgVsflIUEZ5Jcb" target="_blank">Google Profile</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS (versione anti-cache) -->
+    <script src="script.js?v=2.3"></script>
+</body>
+</html>
