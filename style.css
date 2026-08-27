@@ -14,6 +14,12 @@
     --dark-accent: #111111;
     --border-color: #eaeaea;
     --font-main: 'Plus Jakarta Sans', sans-serif;
+    
+    /* VARIABILI OMBRE NEUMORFICHE */
+    --neu-light: #ffffff;
+    --neu-dark: #e2e0d8;
+    --neu-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light);
+    --neu-pressed: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
 }
 
 html {
@@ -34,7 +40,7 @@ body {
    ========================================== */
 body::before {
     content: "";
-    position: fixed; /* Mantiene lo sfondo fisso anche durante lo scroll */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -45,9 +51,8 @@ body::before {
         url('foglia3.png');
     background-size: 140px auto, 130px auto, 120px auto;
     background-repeat: no-repeat;
-    /* Posiziona le foglie sparse ai 4 angoli/lati dello schermo */
     background-position: left -30px top 20px, right -30px top 350px, left -20px bottom 40px;
-    opacity: 0.12; /* Molto sfumate per far leggere bene i testi */
+    opacity: 0.12;
     pointer-events: none;
     z-index: 0;
 }
@@ -92,6 +97,7 @@ body::after {
         z-index: 0;
     }
 }
+
 .container {
     width: 90%;
     max-width: 800px;
@@ -143,37 +149,74 @@ body::after {
     height: 2px;
     background-color: var(--dark-accent);
     border-radius: 2px;
+    transition: all 0.3s ease;
 }
 
-/* MENU A TENDINA */
+/* Animazione Hamburger a X quando attivo */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ==========================================
+   MENU A TENDINA (ANIMATO & NEUMORFICO)
+   ========================================== */
 .nav-dropdown {
     position: absolute;
-    top: 50px;
+    top: 55px;
     right: 0;
-    width: 220px;
-    background-color: #ffffff;
-    border-radius: 14px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    display: none;
+    width: 230px;
+    background-color: var(--bg-color);
+    border-radius: 22px;
+    padding: 22px 20px;
+    box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light);
+    
+    /* Gestione animazione di apertura fluida */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.96);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    display: block; /* Sostituisce display:none per consentire le transizioni */
 }
 
+/* Stato Attivo (Menu Aperto) */
 .nav-dropdown.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
 }
 
 .nav-dropdown ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .nav-link {
-    color: var(--text-color);
+    color: var(--dark-accent);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    border-radius: 30px;
+    display: block;
+    transition: all 0.2s ease;
+}
+
+/* Effetto al tocco sulle opzioni del menu */
+.nav-link:hover, .nav-link:active {
+    color: var(--accent-color);
+    box-shadow: var(--neu-pressed);
 }
 
 /* PRESENTAZIONE & LOGO */
@@ -216,10 +259,10 @@ body::after {
 }
 
 .feature-card {
-    background-color: transparent; /* Rimuove il fondo bianco */
+    background-color: transparent;
     padding: 15px;
     border-radius: 0;
-    border: none; /* Rimuove la cornice */
+    border: none;
     text-align: center;
     backdrop-filter: none;
 }
@@ -239,7 +282,7 @@ body::after {
     font-size: 0.9rem;
 }
 
-/* TITOLI SEZIONE RIDOTTI DI 1/3 */
+/* TITOLI SEZIONE */
 .section-title {
     font-size: 1.1rem;
     text-align: center;
@@ -254,25 +297,37 @@ body::after {
 .buttons-stack {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
 }
 
+/* ==========================================
+   PULSANTI STILE NEUMORFISMO PURO
+   ========================================== */
 .btn {
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    border-radius: 30px;
+    border-radius: 50px; /* Forma a pillola Soft UI */
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: all 0.25s ease;
     cursor: pointer;
     border: none;
     text-align: center;
+    background-color: var(--bg-color);
+    color: var(--dark-accent);
+    box-shadow: var(--neu-shadow);
+}
+
+/* Effetto pressione fisicamente scolpito */
+.btn:hover, .btn:active {
+    transform: translateY(1px);
+    box-shadow: var(--neu-pressed);
 }
 
 .btn-xl {
-    padding: 20px 24px;
+    padding: 18px 24px;
     font-size: 1.05rem;
     width: 100%;
 }
@@ -284,48 +339,56 @@ body::after {
 }
 
 .btn-menu {
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     color: var(--dark-accent);
-    border: 2px solid var(--dark-accent);
 }
 
+/* Neumorfismo con Colore Brand Accent */
 .btn-accent {
     background-color: var(--accent-color);
     color: #ffffff;
+    box-shadow: 6px 6px 14px rgba(0, 146, 69, 0.3), -6px -6px 14px #ffffff;
 }
 
+.btn-accent:hover, .btn-accent:active {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Neumorfismo Scuro (Primary) */
 .btn-primary {
     background-color: var(--dark-accent);
     color: #ffffff;
+    box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.2), -6px -6px 14px #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
 }
 
 .btn-outline {
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     color: var(--dark-accent);
-    border: 2px solid var(--accent-color);
 }
 
 .btn-outline-dark {
-    background-color: transparent;
+    background-color: var(--bg-color);
     color: var(--dark-accent);
-    border: 2px solid var(--border-color);
 }
 
 .btn-outline-sm {
-    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
     color: var(--text-color);
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 8px 18px;
+    border-radius: 30px;
     text-decoration: none;
     display: inline-block;
     font-size: 0.85rem;
     font-weight: 600;
-    background-color: #ffffff;
+    box-shadow: 4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light);
 }
 
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.btn-outline-sm:hover, .btn-outline-sm:active {
+    box-shadow: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
 }
 
 /* DOVE SIAMO & CONTATTI */
@@ -334,11 +397,11 @@ body::after {
 }
 
 .location-info {
-    background-color: transparent; /* Rimuove il fondo bianco */
+    background-color: transparent;
     padding: 20px 10px;
     border-radius: 0;
-    border: none; /* Rimuove il bordo/cornice */
-    backdrop-filter: none; /* Rimuove l'effetto vetro/sfocato */
+    border: none;
+    backdrop-filter: none;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -349,7 +412,7 @@ body::after {
     font-weight: 600;
 }
 
-/* POPUP MODALE */
+/* POPUP MODALE (SCHEDA NEUMORFICA) */
 .modal {
     display: none;
     position: fixed;
@@ -357,7 +420,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.4);
     backdrop-filter: blur(4px);
     z-index: 2000;
     justify-content: center;
@@ -369,14 +432,14 @@ body::after {
 }
 
 .modal-content {
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     padding: 30px 22px;
-    border-radius: 20px;
+    border-radius: 28px;
     max-width: 400px;
     width: 90%;
     position: relative;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: var(--neu-shadow);
 }
 
 .close-modal {
@@ -393,7 +456,7 @@ body::after {
 .modal-buttons {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 /* FOOTER */
@@ -401,7 +464,7 @@ body::after {
     border-top: 1px solid var(--border-color);
     padding: 35px 0;
     text-align: center;
-    background-color: #ffffff;
+    background-color: transparent;
     font-size: 0.85rem;
     color: var(--text-muted);
     position: relative;
