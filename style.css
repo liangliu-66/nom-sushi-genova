@@ -216,12 +216,12 @@ body::after {
 }
 
 .feature-card {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 22px;
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
+    background-color: transparent; /* Rimuove il fondo bianco */
+    padding: 15px;
+    border-radius: 0;
+    border: none; /* Rimuove la cornice */
     text-align: center;
-    backdrop-filter: blur(4px);
+    backdrop-filter: none;
 }
 
 .feature-card .icon {
@@ -334,11 +334,11 @@ body::after {
 }
 
 .location-info {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 30px 25px;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(4px);
+    background-color: transparent; /* Rimuove il fondo bianco */
+    padding: 20px 10px;
+    border-radius: 0;
+    border: none; /* Rimuove il bordo/cornice */
+    backdrop-filter: none; /* Rimuove l'effetto vetro/sfocato */
     max-width: 500px;
     margin: 0 auto;
 }
