@@ -29,21 +29,25 @@ body {
     overflow-x: hidden;
 }
 
-/* SFONDO MOBILE (ARIANO, NON CAOTICO) */
+/* ==========================================
+   SFONDO MOBILE (FOGLIE SU TUTTA L'INTERFACCIA)
+   ========================================== */
 body::before {
     content: "";
-    position: absolute;
+    position: fixed; /* Mantiene lo sfondo fisso anche durante lo scroll */
     top: 0;
     left: 0;
-    width: 140px;
-    height: 100%;
+    width: 100%;
+    height: 100vh;
     background-image: 
         url('foglia6.png'), 
-        url('foglia7.png');
-    background-size: 110px auto, 120px auto;
+        url('foglia7.png'),
+        url('foglia3.png');
+    background-size: 140px auto, 130px auto, 120px auto;
     background-repeat: no-repeat;
-    background-position: left -30px top 120px, left -40px top 700px;
-    opacity: 0.18;
+    /* Posiziona le foglie sparse ai 4 angoli/lati dello schermo */
+    background-position: left -30px top 20px, right -30px top 350px, left -20px bottom 40px;
+    opacity: 0.12; /* Molto sfumate per far leggere bene i testi */
     pointer-events: none;
     z-index: 0;
 }
@@ -52,9 +56,13 @@ body::after {
     display: none; 
 }
 
-/* SFONDO DESKTOP (PULITO SENZA SOVRAPPOSIZIONI) */
+/* ==========================================
+   SFONDO DESKTOP (FOGLIE A CORNICE AI LATI)
+   ========================================== */
 @media (min-width: 768px) {
     body::before {
+        position: absolute;
+        height: 100%;
         width: 250px;
         background-image: 
             url('foglia6.png'), 
@@ -84,7 +92,6 @@ body::after {
         z-index: 0;
     }
 }
-
 .container {
     width: 90%;
     max-width: 800px;
