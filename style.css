@@ -36,6 +36,19 @@ body {
 }
 
 /* ==========================================
+   CANVAS PARTICELLE CADENTI (FOGLIE VETTORIALI)
+   ========================================== */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ==========================================
    SFONDO MOBILE (FOGLIE SU TUTTA L'INTERFACCIA)
    ========================================== */
 body::before {
@@ -184,7 +197,7 @@ body::after {
     transform: translateY(-12px) scale(0.96);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
-    display: block; /* Sostituisce display:none per consentire le transizioni */
+    display: block;
 }
 
 /* Stato Attivo (Menu Aperto) */
@@ -308,7 +321,7 @@ body::after {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    border-radius: 50px; /* Forma a pillola Soft UI */
+    border-radius: 50px;
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: all 0.25s ease;
