@@ -24,9 +24,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- CSS Standard (con versione anti-cache) -->
-    <link rel="stylesheet" href="style.css?v=2.3">
+    <link rel="stylesheet" href="style.css?v=2.4">
 </head>
 <body>
+
+    <!-- CANVAS PER PARTICELLE FOGLIE TROPICALI (VETTORIALI) -->
+    <canvas id="particles-canvas"></canvas>
 
     <!-- Header Fisso (Solo Menu a Tendina) -->
     <header class="header">
@@ -197,28 +200,26 @@
         </div>
     </div>
 
- <!-- POPUP MAPPA GOOGLE -->
-<div class="modal" id="map-modal">
-    <div class="modal-content" style="max-width: 600px; padding: 25px 15px 15px 15px;">
-        <button class="close-modal" id="close-map-modal">&times;</button>
-        <h3 style="margin-bottom: 15px;">Dove <span>Siamo</span></h3>
-        <div class="map-box">
-            <!-- Iframe con ricerca testuale diretta dell'indirizzo esatto -->
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2870.472!2d8.937213!3d44.4074495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d343e0e9803bf5%3A0xb696bc28c89420ef!2sNOM%20SUSHI%20VIBES%2C%20Via%20XII%20Ottobre%2C%20192r%2C%2016121%20Genova%20GE!5e0!3m2!1sit!2sit!4v1710000000000!5m2!1sit!2sit" 
-                width="100%" 
-                height="320" 
-                style="border:0; border-radius: 12px;" 
-                allowfullscreen="" 
-                loading="lazy">
-            </iframe>
+    <!-- POPUP MAPPA GOOGLE -->
+    <div class="modal" id="map-modal">
+        <div class="modal-content" style="max-width: 600px; padding: 25px 15px 15px 15px;">
+            <button class="close-modal" id="close-map-modal">&times;</button>
+            <h3 style="margin-bottom: 15px;">Dove <span>Siamo</span></h3>
+            <div class="map-box">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2870.472!2d8.937213!3d44.4074495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d343e0e9803bf5%3A0xb696bc28c89420ef!2sNOM%20SUSHI%20VIBES%2C%20Via%20XII%20Ottobre%2C%20192r%2C%2016121%20Genova%20GE!5e0!3m2!1sit!2sit!4v1710000000000!5m2!1sit!2sit" 
+                    width="100%" 
+                    height="320" 
+                    style="border:0; border-radius: 12px;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=NOM+SUSHI+VIBES+Via+XII+Ottobre+192r+16121+Genova+GE" target="_blank" class="btn btn-outline-sm" style="margin-top: 15px;">
+                Apri direttamente su App Google Maps
+            </a>
         </div>
-        <!-- Link universale a ricerca diretta per forzare l'apertura su app senza errori -->
-        <a href="https://www.google.com/maps/search/?api=1&query=NOM+SUSHI+VIBES+Via+XII+Ottobre+192r+16121+Genova+GE" target="_blank" class="btn btn-outline-sm" style="margin-top: 15px;">
-            Apri direttamente su App Google Maps
-        </a>
     </div>
-</div>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -233,6 +234,6 @@
     </footer>
 
     <!-- JS (versione anti-cache) -->
-    <script src="script.js?v=2.3"></script>
+    <script src="script.js?v=2.4"></script>
 </body>
 </html>
