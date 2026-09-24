@@ -233,7 +233,9 @@ function formatBotMessage(text) {
         .replace(/\[BTN:MENU_PRANZO\]/g, '<br><a href="pdf/menu-sushi-pranzo-genova-nom.pdf" target="_blank" class="chat-cta-btn">🍱 Apri Menu Pranzo</a>')
         .replace(/\[BTN:MENU_CENA\]/g, '<br><a href="pdf/menu-sushi-cena-genova-nom.pdf" target="_blank" class="chat-cta-btn">🍣 Apri Menu Cena</a>')
         .replace(/\[BTN:MAPPA\]/g, '<br><a href="https://www.google.com/maps/search/?api=1&query=NOM+SUSHI+VIBES+Via+XII+Ottobre+192r+16121+Genova+GE" target="_blank" class="chat-cta-btn">📍 Apri su Google Maps</a>')
-        .replace(/\[BTN:SOCIAL\]/g, '<br><a href="https://www.instagram.com/nom_sushi_genova/" target="_blank" class="chat-cta-btn">📸 Seguici su Instagram</a>');
+        .replace(/\[BTN:INSTAGRAM\]/g, '<br><a href="https://www.instagram.com/nom_sushi_genova/" target="_blank" class="chat-cta-btn">📸 Instagram</a>')
+        .replace(/\[BTN:FACEBOOK\]/g, '<br><a href="https://www.facebook.com/nomsushi" target="_blank" class="chat-cta-btn">📘 Facebook</a>')
+        .replace(/\[BTN:TRIPADVISOR\]/g, '<br><a href="https://www.tripadvisor.it/Restaurant_Review-g187823-d24165947-Reviews-Nom_Sushi_Vibes-Genoa_Italian_Riviera_Liguria.html" target="_blank" class="chat-cta-btn">🦉 TripAdvisor</a>');
 
     return formattedText;
 }
