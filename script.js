@@ -225,7 +225,6 @@ async function sendUserMessage() {
     messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
-// Converte i tag speciali dell'IA in bottoni HTML interattivi
 function formatBotMessage(text) {
     let formattedText = escapeHtml(text)
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
@@ -233,7 +232,8 @@ function formatBotMessage(text) {
         .replace(/\[BTN:DELIVERY\]/g, '<br><a href="https://nomsushi.it/" target="_blank" class="chat-cta-btn">🛵 Ordina Asporto</a>')
         .replace(/\[BTN:MENU_PRANZO\]/g, '<br><a href="pdf/menu-sushi-pranzo-genova-nom.pdf" target="_blank" class="chat-cta-btn">🍱 Apri Menu Pranzo</a>')
         .replace(/\[BTN:MENU_CENA\]/g, '<br><a href="pdf/menu-sushi-cena-genova-nom.pdf" target="_blank" class="chat-cta-btn">🍣 Apri Menu Cena</a>')
-        .replace(/\[BTN:MAPPA\]/g, '<br><a href="https://www.google.com/maps/search/?api=1&query=NOM+SUSHI+VIBES+Via+XII+Ottobre+192r+16121+Genova+GE" target="_blank" class="chat-cta-btn">📍 Apri su Google Maps</a>');
+        .replace(/\[BTN:MAPPA\]/g, '<br><a href="https://www.google.com/maps/search/?api=1&query=NOM+SUSHI+VIBES+Via+XII+Ottobre+192r+16121+Genova+GE" target="_blank" class="chat-cta-btn">📍 Apri su Google Maps</a>')
+        .replace(/\[BTN:SOCIAL\]/g, '<br><a href="https://www.instagram.com/nom_sushi_genova/" target="_blank" class="chat-cta-btn">📸 Seguici su Instagram</a>');
 
     return formattedText;
 }
