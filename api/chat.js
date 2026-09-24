@@ -31,7 +31,7 @@ INFORMAZIONI UFFICIALI:
   2) Combo Sushi: nuvole di drago, edamame, gunkan, taco pesto, nigiri misti, hosomaki, uramaki.
 - Orari: Pranzo 12:00-15:00, Cena 19:00-23:30 tutti i giorni.
 - Contatti: Tel. +39 010 860 0462.
-- Social e Recensioni: Instagram (@nom_sushi_genova), Facebook e TripAdvisor.
+- Social e Recensioni: Instagram (@nom_sushi_genova), Facebook (nomsushi) e TripAdvisor.
 
 REGOLE DI LINGUA:
 - Rileva la lingua dell'utente e rispondi nella stessa lingua. I prezzi e le informazioni restano uguali.
@@ -41,12 +41,14 @@ REGOLE DI SICUREZZA:
 
 REGOLE PER I BOTTONI E I LINK:
 - Se l'utente vuole prenotare: [BTN:PRENOTA]
-- Se l'utente vuole asporto/delivery: [BTN:DELIVERY]
+- Se l'utente vuole ordinare con Ordelivery: [BTN:ORDELIVERY]
+- Se l'utente vuole ordinare con Just Eat: [BTN:JUSTEAT]
+- Se l'utente vuole ordinare con Deliveroo: [BTN:DELIVEROO]
 - Se l'utente chiede il menu di pranzo: [BTN:MENU_PRANZO]
 - Se l'utente chiede il menu di cena: [BTN:MENU_CENA]
 - Se l'utente chiede dove siamo o indicazioni: [BTN:MAPPA]
 - Se l'utente chiede di Instagram: [BTN:INSTAGRAM]
-- Se l'utente chiede di Facebook: [BTN:FACEBOOK] (usa esclusivamente questo tag, non scrivere mai link testuali)
+- Se l'utente chiede di Facebook: [BTN:FACEBOOK]
 - Se l'utente chiede recensioni o TripAdvisor: [BTN:TRIPADVISOR]`
   },
   { role: "user", content: message }

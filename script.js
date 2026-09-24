@@ -229,12 +229,14 @@ function formatBotMessage(text) {
     let formattedText = escapeHtml(text)
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
         .replace(/\[BTN:PRENOTA\]/g, '<br><a href="https://www.nomsushi.shop/?action=reserve" target="_blank" class="chat-cta-btn">📅 Prenota Tavolo</a>')
-        .replace(/\[BTN:DELIVERY\]/g, '<br><a href="https://nomsushi.it/" target="_blank" class="chat-cta-btn">🛵 Ordina Asporto</a>')
+        .replace(/\[BTN:ORDELIVERY\]/g, '<br><a href="https://go.ordelivery.shop/#/restaurantPage?string_id=SZPTV" target="_blank" class="chat-cta-btn">🛵 Ordina con Ordelivery</a>')
+        .replace(/\[BTN:JUSTEAT\]/g, '<br><a href="https://www.justeat.it/restaurants-nom-sushi-vibes-genova/menu?serviceType=collection&utm_source=google&utm_medium=organic&utm_campaign=foodorder" target="_blank" class="chat-cta-btn">🍱 Ordina con Just Eat</a>')
+        .replace(/\[BTN:DELIVEROO\]/g, '<br><a href="https://deliveroo.it/it/menu/genova/genova-centro/nom-sushi-vibes/?fulfillment_type=COLLECTION/" target="_blank" class="chat-cta-btn">🍣 Ordina con Deliveroo</a>')
         .replace(/\[BTN:MENU_PRANZO\]/g, '<br><a href="pdf/menu-sushi-pranzo-genova-nom.pdf" target="_blank" class="chat-cta-btn">🍱 Apri Menu Pranzo</a>')
         .replace(/\[BTN:MENU_CENA\]/g, '<br><a href="pdf/menu-sushi-cena-genova-nom.pdf" target="_blank" class="chat-cta-btn">🍣 Apri Menu Cena</a>')
         .replace(/\[BTN:MAPPA\]/g, '<br><a href="https://www.google.com/maps/search/?api=1&query=NOM+SUSHI+VIBES+Via+XII+Ottobre+192r+16121+Genova+GE" target="_blank" class="chat-cta-btn">📍 Apri su Google Maps</a>')
         .replace(/\[BTN:INSTAGRAM\]/g, '<br><a href="https://www.instagram.com/nom_sushi_genova/" target="_blank" class="chat-cta-btn">📸 Instagram</a>')
-        .replace(/\[BTN:FACEBOOK\]/g, '<br><a href="https://www.facebook.com/NOM-Sushi-Vibes-105137840611870" target="_blank" class="chat-cta-btn">📘 Facebook</a>')
+        .replace(/\[BTN:FACEBOOK\]/g, '<br><a href="https://www.facebook.com/nomsushi" target="_blank" class="chat-cta-btn">📘 Facebook</a>')
         .replace(/\[BTN:TRIPADVISOR\]/g, '<br><a href="https://www.tripadvisor.it/Restaurant_Review-g187823-d24165947-Reviews-Nom_Sushi_Vibes-Genoa_Italian_Riviera_Liguria.html" target="_blank" class="chat-cta-btn">🦉 TripAdvisor</a>');
 
     return formattedText;
