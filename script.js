@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const particleCount = 22; // Numero ottimale di foglie in caduta
+        const particleCount = 22;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Palette toni verdi tropicali (incluso il verde brand #009245)
         const tropicalColors = [
             '#009245',
             '#1b5e20',
@@ -81,15 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * -canvas.height;
-                this.size = Math.random() * 12 + 10; // Dimensione (10px - 22px)
-                this.speedY = Math.random() * 0.9 + 0.5; // Velocità discesa
-                this.speedX = Math.random() * 0.6 - 0.3; // Spinta orizzontale
-                this.opacity = Math.random() * 0.35 + 0.25; // Trasparenza delicata
+                this.size = Math.random() * 12 + 10;
+                this.speedY = Math.random() * 0.9 + 0.5;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.opacity = Math.random() * 0.35 + 0.25;
                 this.angle = Math.random() * Math.PI * 2;
                 this.spin = Math.random() * 0.02 - 0.01;
                 this.swingSpeed = Math.random() * 0.02 + 0.01;
                 this.color = tropicalColors[Math.floor(Math.random() * tropicalColors.length)];
-                this.type = Math.floor(Math.random() * 2); // 0 = Bamboo/Palma, 1 = Monstera/Ovale
+                this.type = Math.floor(Math.random() * 2);
             }
 
             update() {
@@ -112,27 +111,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.lineWidth = 1;
 
                 if (this.type === 0) {
-                    // FOGLIA LANCEOLATA (TIPO BAMBOO / PALMA)
                     ctx.beginPath();
                     ctx.moveTo(0, -this.size * 1.8);
                     ctx.quadraticCurveTo(this.size * 0.7, -this.size * 0.4, 0, this.size * 1.8);
                     ctx.quadraticCurveTo(-this.size * 0.7, -this.size * 0.4, 0, -this.size * 1.8);
                     ctx.fill();
 
-                    // Nervatura centrale
                     ctx.beginPath();
                     ctx.moveTo(0, -this.size * 1.5);
                     ctx.lineTo(0, this.size * 1.5);
                     ctx.stroke();
                 } else {
-                    // FOGLIA OVALE TROPICALE CON NERVATURE (TIPO MONSTERA)
                     ctx.beginPath();
                     ctx.moveTo(0, -this.size * 1.4);
                     ctx.bezierCurveTo(this.size * 1.2, -this.size * 0.6, this.size * 1.1, this.size * 0.8, 0, this.size * 1.4);
                     ctx.bezierCurveTo(-this.size * 1.1, this.size * 0.8, -this.size * 1.2, -this.size * 0.6, 0, -this.size * 1.4);
                     ctx.fill();
 
-                    // Nervature secondarie
                     ctx.beginPath();
                     ctx.moveTo(0, -this.size * 1.2);
                     ctx.lineTo(0, this.size * 1.2);
@@ -162,21 +157,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
         animate();
     }
-
-    // Aggiungi questo dentro script.js
-    async function inviaMessaggioChat(testoMessaggio) {
-        try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: testoMessaggio })
-            });
-        
-            const data = await response.json();
-            return data.reply;
-        } catch (error) {
-            console.error("Errore:", error);
-            return "Mi dispiace, c'è un problema di connessione al momento.";
-        }
-    }
 });
+
+
+// ==========================================
+// 5. FUNZIONI CHAT AI (GLOBALI)
+// ==========================================
+
+// Gestione apertura/chiusura finestra chat
+function toggleChat() {
+    const chatBox = document.getElementById('nom-chat-box');
+    if (chatBox) {
+        chatBox.classList.toggle('hidden');
+    }
+}
+
+// Invia con il tasto Invio
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendUserMessage();
+    }
+}
+
+// Funzione principale di invio messaggio
+async function sendUserMessage() {
+    const inputField = document.getElementById('nom-user-input');
+    const messageContainer = document.getElementById('nom-chat-messages');
+    if (!inputField || !messageContainer) return;
+
+    const text = inputField.value.trim();
+    if (!text) return;
+
+    // Mostra il messaggio dell'utente
+    messageContainer.innerHTML += `<div class="user-msg">${escapeHtml(text)}</div>`;
+    inputField.value = '';
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+
+    // Messaggio di caricamento temporaneo
+    const loadingId = 'loading-' + Date.now();
+    messageContainer.innerHTML += `<div id="${loadingId}" class="bot-msg"><em>Sto scrivendo...</em></div>`;
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
+
+        const data = await response.json();
+        
+        // Rimuovi il caricamento
+        const loadingElement = document.getElementById(loadingId);
+        if (loadingElement) loadingElement.remove();
+
+        if (response.ok) {
+            messageContainer.innerHTML += `<div class="bot-msg">${escapeHtml(data.reply)}</div>`;
+        } else {
+            messageContainer.innerHTML += `<div class="bot-msg">Mi dispiace, si è verificato un errore temporaneo.</div>`;
+        }
+    } catch (error) {
+        const loadingElement = document.getElementById(loadingId);
+        if (loadingElement) loadingElement.remove();
+        messageContainer.innerHTML += `<div class="bot-msg">Errore di connessione al server.</div>`;
+    }
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+// Sicurezza anti-XSS
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
