@@ -188,7 +188,7 @@ async function sendUserMessage() {
     const text = inputField.value.trim();
     if (!text) return;
 
-    // Mostra il messaggio dell'utente
+    // Mostra il messaggio dell'utente (sanificato)
     messageContainer.innerHTML += `<div class="user-msg">${escapeHtml(text)}</div>`;
     inputField.value = '';
     messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -212,7 +212,7 @@ async function sendUserMessage() {
         if (loadingElement) loadingElement.remove();
 
         if (response.ok) {
-            messageContainer.innerHTML += `<div class="bot-msg">${escapeHtml(data.reply)}</div>`;
+            messageContainer.innerHTML += `<div class="bot-msg">${formatBotMessage(data.reply)}</div>`;
         } else {
             messageContainer.innerHTML += `<div class="bot-msg">Mi dispiace, si è verificato un errore temporaneo.</div>`;
         }
@@ -225,7 +225,16 @@ async function sendUserMessage() {
     messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
-// Sicurezza anti-XSS
+// Converte i tag speciali dell'IA in bottoni HTML interattivi
+function formatBotMessage(text) {
+    let formattedText = escapeHtml(text)
+        .replace(/\[BTN:PRENOTA\]/g, '<br><a href="https://www.nomsushi.shop/?action=reserve" target="_blank" class="chat-cta-btn">📅 Prenota Tavolo</a>')
+        .replace(/\[BTN:DELIVERY\]/g, '<br><a href="https://nomsushi.it/#delivery" target="_blank" class="chat-cta-btn">🛵 Ordina Asporto</a>');
+
+    return formattedText;
+}
+
+// Sicurezza anti-XSS di base
 function escapeHtml(text) {
     return text
         .replace(/&/g, "&amp;")

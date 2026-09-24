@@ -628,3 +628,21 @@ body::after {
     cursor: pointer;
 }
 
+/* Stili per i bottoni dinamici nella chat */
+.chat-cta-btn {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 5px;
+    padding: 8px 14px;
+    background-color: #009245; /* Verde brand Nom Sushi */
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.chat-cta-btn:hover {
+    background-color: #007537;
+}
