@@ -46,8 +46,8 @@ REGOLE PER I BOTTONI E I LINK:
 - Se l'utente chiede il menu di cena: [BTN:MENU_CENA]
 - Se l'utente chiede dove siamo o indicazioni: [BTN:MAPPA]
 - Se l'utente chiede di Instagram: [BTN:INSTAGRAM]
-- Se l'utente chiede di Facebook: [BTN:FACEBOOK]
-- Se l'utente chiede recensioni, opinioni o TripAdvisor: [BTN:TRIPADVISOR]`
+- Se l'utente chiede di Facebook: [BTN:FACEBOOK] (usa esclusivamente questo tag, non scrivere mai link testuali)
+- Se l'utente chiede recensioni o TripAdvisor: [BTN:TRIPADVISOR]`
   },
   { role: "user", content: message }
 ],
