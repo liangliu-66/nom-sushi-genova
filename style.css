@@ -1,0 +1,630 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #faf9f6;        
+    --card-bg: #ffffff;
+    --text-color: #1a1a1a;
+    --text-muted: #666666;
+    --accent-color: #009245;    
+    --accent-hover: #007637;
+    --dark-accent: #111111;
+    --border-color: #eaeaea;
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+    
+    /* VARIABILI OMBRE NEUMORFICHE */
+    --neu-light: #ffffff;
+    --neu-dark: #e2e0d8;
+    --neu-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light);
+    --neu-pressed: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   CANVAS PARTICELLE CADENTI (FOGLIE VETTORIALI)
+   ========================================== */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ==========================================
+   SFONDO MOBILE (FOGLIE SU TUTTA L'INTERFACCIA)
+   ========================================== */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: 
+        url('foglia6.png'), 
+        url('foglia7.png'),
+        url('foglia3.png');
+    background-size: 140px auto, 130px auto, 120px auto;
+    background-repeat: no-repeat;
+    background-position: left -30px top 20px, right -30px top 350px, left -20px bottom 40px;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    display: none; 
+}
+
+/* ==========================================
+   SFONDO DESKTOP (FOGLIE A CORNICE AI LATI)
+   ========================================== */
+@media (min-width: 768px) {
+    body::before {
+        position: absolute;
+        height: 100%;
+        width: 250px;
+        background-image: 
+            url('foglia6.png'), 
+            url('foglia3.png');
+        background-size: 210px auto, 180px auto;
+        background-repeat: repeat-y;
+        background-position: left -30px top 100px, left -20px top 900px;
+        opacity: 0.20;
+    }
+
+    body::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background-image: 
+            url('foglia7.png'), 
+            url('foglia6.png');
+        background-size: 190px auto, 210px auto;
+        background-repeat: repeat-y;
+        background-position: right -30px top 350px, right -20px top 1150px;
+        opacity: 0.20;
+        pointer-events: none;
+        z-index: 0;
+    }
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* HEADER FISSO */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(250, 249, 246, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+    padding: 14px 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-title {
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    color: var(--dark-accent);
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--dark-accent);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Animazione Hamburger a X quando attivo */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ==========================================
+   MENU A TENDINA (ANIMATO & NEUMORFICO)
+   ========================================== */
+.nav-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 230px;
+    background-color: var(--bg-color);
+    border-radius: 22px;
+    padding: 22px 20px;
+    box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light);
+    
+    /* Gestione animazione di apertura fluida */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.96);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    display: block;
+}
+
+/* Stato Attivo (Menu Aperto) */
+.nav-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.nav-dropdown ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-link {
+    color: var(--dark-accent);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    border-radius: 30px;
+    display: block;
+    transition: all 0.2s ease;
+}
+
+/* Effetto al tocco sulle opzioni del menu */
+.nav-link:hover, .nav-link:active {
+    color: var(--accent-color);
+    box-shadow: var(--neu-pressed);
+}
+
+/* PRESENTAZIONE & LOGO */
+.section {
+    padding: 40px 0;
+}
+
+.hero {
+    padding-top: 110px;
+    text-align: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.main-logo {
+    max-width: 440px;
+    width: 85%;
+    height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    display: block;
+}
+
+.hero-description {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 650px;
+    margin: 0 auto 30px auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.feature-card {
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 0;
+    border: none;
+    text-align: center;
+    backdrop-filter: none;
+}
+
+.feature-card .icon {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* TITOLI SEZIONE */
+.section-title {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 18px;
+    font-weight: 700;
+}
+
+.section-title span {
+    color: var(--accent-color);
+}
+
+.buttons-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ==========================================
+   PULSANTI STILE NEUMORFISMO PURO
+   ========================================== */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    background-color: var(--bg-color);
+    color: var(--dark-accent);
+    box-shadow: var(--neu-shadow);
+}
+
+/* Effetto pressione fisicamente scolpito */
+.btn:hover, .btn:active {
+    transform: translateY(1px);
+    box-shadow: var(--neu-pressed);
+}
+
+.btn-xl {
+    padding: 18px 24px;
+    font-size: 1.05rem;
+    width: 100%;
+}
+
+.btn-lg {
+    padding: 15px 20px;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.btn-menu {
+    background-color: var(--bg-color);
+    color: var(--dark-accent);
+}
+
+/* Neumorfismo con Colore Brand Accent */
+.btn-accent {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    box-shadow: 6px 6px 14px rgba(0, 146, 69, 0.3), -6px -6px 14px #ffffff;
+}
+
+.btn-accent:hover, .btn-accent:active {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Neumorfismo Scuro (Primary) */
+.btn-primary {
+    background-color: var(--dark-accent);
+    color: #ffffff;
+    box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.2), -6px -6px 14px #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.btn-outline {
+    background-color: var(--bg-color);
+    color: var(--dark-accent);
+}
+
+.btn-outline-dark {
+    background-color: var(--bg-color);
+    color: var(--dark-accent);
+}
+
+.btn-outline-sm {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 8px 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light);
+}
+
+.btn-outline-sm:hover, .btn-outline-sm:active {
+    box-shadow: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
+}
+
+/* DOVE SIAMO & CONTATTI */
+.location-section {
+    text-align: center;
+}
+
+.location-info {
+    background-color: transparent;
+    padding: 20px 10px;
+    border-radius: 0;
+    border: none;
+    backdrop-filter: none;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.phone-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* POPUP MODALE (SCHEDA NEUMORFICA) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-color);
+    padding: 30px 22px;
+    border-radius: 28px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    box-shadow: var(--neu-shadow);
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* FOOTER */
+.footer {
+    border-top: 1px solid var(--border-color);
+    padding: 35px 0;
+    text-align: center;
+    background-color: transparent;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 1;
+}
+
+.social-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a {
+    color: var(--dark-accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* RESPONSIVE DESKTOP */
+@media (min-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .main-logo {
+        max-width: 520px;
+    }
+    .section-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* Stili Widget Chat Nom Sushi */
+#nom-chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-family: sans-serif;
+}
+
+#nom-chat-toggle {
+    background-color: #111;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+#nom-chat-toggle:hover {
+    transform: scale(1.05);
+}
+
+#nom-chat-box {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 320px;
+    height: 400px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+#nom-chat-box.hidden {
+    display: none;
+}
+
+#nom-chat-header {
+    background: #111;
+    color: #fff;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+#nom-chat-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#nom-chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f9f9f9;
+}
+
+.bot-msg, .user-msg {
+    max-width: 80%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.bot-msg {
+    background: #e4e4e4;
+    color: #333;
+    align-self: flex-start;
+}
+
+.user-msg {
+    background: #111;
+    color: #fff;
+    align-self: flex-end;
+}
+
+#nom-chat-input-area {
+    display: flex;
+    padding: 10px;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+
+#nom-user-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+}
+
+#nom-chat-input-area button {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
