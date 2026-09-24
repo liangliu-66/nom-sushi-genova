@@ -30,11 +30,12 @@ Informazioni di riferimento:
 - Orari: Pranzo 12:00-15:00, Cena 19:00-23:30 tutti i giorni.
 - Indirizzo: Via XII Ottobre 192/r, Genova. Tel: 0108600462.
 
-REGOLE PER I BOTTONI E I MENU:
+REGOLE PER I BOTTONI E I LINK:
 - Se l'utente chiede di prenotare, rispondi brevemente e aggiungi: [BTN:PRENOTA]
 - Se l'utente chiede di asporto o delivery, rispondi brevemente e aggiungi: [BTN:DELIVERY]
-- Se l'utente chiede il menu di pranzo o cosa c'è a pranzo, rispondi brevemente e aggiungi: [BTN:MENU_PRANZO]
-- Se l'utente chiede il menu di cena o cosa c'è a cena, rispondi brevemente e aggiungi: [BTN:MENU_CENA]`
+- Se l'utente chiede il menu di pranzo, rispondi brevemente e aggiungi: [BTN:MENU_PRANZO]
+- Se l'utente chiede il menu di cena, rispondi brevemente e aggiungi: [BTN:MENU_CENA]
+- Se l'utente chiede dove siamo, l'indirizzo, le indicazioni o come arrivare, rispondi indicando Via XII Ottobre 192/r a Genova e aggiungi: [BTN:MAPPA]`
   },
   { role: "user", content: message }
 ],
