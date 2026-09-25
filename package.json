@@ -2,5 +2,9 @@
   "name": "nom-sushi-genova",
   "version": "1.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
+    "openai": "^7.23.0"
+  }
 }
