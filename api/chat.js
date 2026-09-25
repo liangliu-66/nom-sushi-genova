@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 
@@ -6,13 +5,21 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function POST(req) {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Metodo non consentito' });
+  }
+
   try {
-    const { message } = await req.json();
+    const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: 'Messaggio mancante' });
+    }
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: 'Chiave OpenAI non configurata nelle variabili d\'ambiente.' }, { status: 500 });
+      return res.status(500).json({ error: 'Chiave OpenAI non configurata nelle variabili d\'ambiente.' });
     }
 
     const openai = new OpenAI({ apiKey });
@@ -103,10 +110,10 @@ REGOLE PER I BOTTONI E LE AZIONI:
     });
 
     const reply = completion.choices[0].message.content;
-    return NextResponse.json({ reply });
+    return res.status(200).json({ reply });
 
   } catch (err) {
     console.error('Errore API Chat:', err);
-    return NextResponse.json({ error: 'Errore interno del server' }, { status: 500 });
+    return res.status(500).json({ error: 'Errore interno del server' });
   }
 }
