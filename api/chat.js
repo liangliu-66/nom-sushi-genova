@@ -1,17 +1,40 @@
-import { createClient } from '@supabase/supabase-js';
-import OpenAI from 'openai';
+const { createClient } = require('@supabase/supabase-js');
+const OpenAI = require('openai');
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
+  // Gestione CORS
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Metodo non consentito' });
   }
 
   try {
-    const { message } = req.body;
+    // Parsing sicuro del corpo della richiesta
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        body = {};
+      }
+    }
+
+    const { message } = body || {};
 
     if (!message) {
       return res.status(400).json({ error: 'Messaggio mancante' });
@@ -114,6 +137,6 @@ REGOLE PER I BOTTONI E LE AZIONI:
 
   } catch (err) {
     console.error('Errore API Chat:', err);
-    return res.status(500).json({ error: 'Errore interno del server' });
+    return res.status(500).json({ error: err.message || 'Errore interno del server' });
   }
-}
+};
