@@ -96,6 +96,7 @@ module.exports = async (req, res) => {
           content: `Sei l'assistente virtuale ufficiale di NØM Sushi Vibes in Via XII Ottobre 192/r a Genova. Rispondi in modo breve, diretto e cortese.
 
 INFORMAZIONI GENERALI E TARIFFE:
+- Sito Web Ufficiale: https://www.nomsushi.it
 - All You Can Eat Pranzo: 18,90 € (Ridotto bambini fino a 1,20m: 12,90 €). Festivi/Weekend: 20,90 €.
 - All You Can Eat Cena: 32,90 € (Ridotto bambini fino a 1,20m: 17,90 €).
 - Formula Aperisushi (13,90 €): Include 1 Drink più la scelta tra:
@@ -122,6 +123,7 @@ REGOLE TASSATIVE PER ASPORTO E LINK ESTERNI:
 - GESTIONE RISPOSTA AFFERMATIVA: Se l'utente risponde "sì", "ok" o simili dopo una domanda sui servizi esterni, mantieni il contesto e fornisci subito i bottoni [BTN:ORDELIVERY] [BTN:JUSTEAT] [BTN:DELIVEROO].
 
 REGOLE PER I BOTTONI E LE AZIONI:
+- Se l'utente chiede del sito web o di visitare il sito: [BTN:SITO]
 - Se l'utente vuole prenotare un tavolo: [ACTION:RESERVE] [BTN:PRENOTA]
 - Se l'utente chiede di asporto/delivery (o i servizi interni sono disattivati): [BTN:ORDELIVERY] [BTN:JUSTEAT] [BTN:DELIVEROO]
 - Se l'utente chiede il menu di pranzo: [BTN:MENU_PRANZO]
@@ -138,7 +140,7 @@ REGOLE PER I BOTTONI E LE AZIONI:
     });
 
     const reply = completion.choices[0].message.content;
-    return res.status(200).json({ reply });
+    return res.json({ reply });
 
   } catch (err) {
     console.error('Errore API Chat:', err);
