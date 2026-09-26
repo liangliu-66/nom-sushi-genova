@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    
 
     // 3. Attivazione di tutti i Pop-up della pagina
     setupModal('open-delivery-modal', 'close-delivery-modal', 'delivery-modal');
