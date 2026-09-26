@@ -123,15 +123,15 @@ REGOLE TASSATIVE PER ASPORTO E LINK ESTERNI:
 - GESTIONE RISPOSTA AFFERMATIVA: Se l'utente risponde "sì", "ok" o simili dopo una domanda sui servizi esterni, mantieni il contesto e fornisci subito i bottoni [BTN:ORDELIVERY] [BTN:JUSTEAT] [BTN:DELIVEROO].
 
 REGOLE PER I BOTTONI E LE AZIONI:
-- Se l'utente chiede del sito web o di visitare il sito: [BTN:SITO]
+- Se l'utente chiede del sito web, del sito ufficiale o di visitare il sito: DEVI RISPONDERE inserendo obbligatoriamente il tag [BTN:SITO].
 - Se l'utente vuole prenotare un tavolo: [ACTION:RESERVE] [BTN:PRENOTA]
 - Se l'utente chiede di asporto/delivery (o i servizi interni sono disattivati): [BTN:ORDELIVERY] [BTN:JUSTEAT] [BTN:DELIVEROO]
 - Se l'utente chiede il menu di pranzo: [BTN:MENU_PRANZO]
 - Se l'utente chiede il menu di cena: [BTN:MENU_CENA]
 - Se l'utente chiede dove siamo o indicazioni: [BTN:MAPPA]
-- Se l'utente chiede di Instagram: [BTN:INSTAGRAM]
-- Se l'utente chiede di Facebook: [BTN:FACEBOOK]
-- Se l'utente chiede recensioni o TripAdvisor: [BTN:TRIPADVISOR]`
+- Se l'utente chiede di Instagram o foto: DEVI RISPONDERE inserendo obbligatoriamente il tag [BTN:INSTAGRAM].
+- Se l'utente chiede di Facebook: DEVI RISPONDERE inserendo obbligatoriamente il tag [BTN:FACEBOOK].
+- Se l'utente chiede recensioni o TripAdvisor: DEVI RISPONDERE inserendo obbligatoriamente il tag [BTN:TRIPADVISOR].`
         },
         { role: "user", content: message }
       ],
