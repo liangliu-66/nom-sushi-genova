@@ -199,7 +199,7 @@ async function sendUserMessage() {
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
     try {
-        const response = await fetch('https://saas-ristorante-plum.vercel.app/api/chat', {
+        const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text })

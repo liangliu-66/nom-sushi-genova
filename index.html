@@ -35,6 +35,23 @@
     <!-- CSS (con Anti-Cache) -->
     <link rel="stylesheet" href="style.css?v=2.4">
 
+    <!-- STILI RAPIDI PER IL WIDGET CHAT -->
+    <style>
+        .hidden { display: none !important; }
+        #nom-chat-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Plus Jakarta Sans', sans-serif; }
+        #nom-chat-toggle { background: #f59e0b; color: #0f172a; border: none; width: 55px; height: 55px; border-radius: 50%; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-size: 14px; }
+        #nom-chat-box { width: 320px; height: 450px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4); margin-bottom: 10px; }
+        #nom-chat-header { background: #f59e0b; color: #0f172a; padding: 12px 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+        #nom-chat-close { background: none; border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; color: #0f172a; }
+        #nom-chat-messages { flex: 1; padding: 12px; overflow-y: auto; font-size: 0.85rem; color: #f8fafc; display: flex; flex-direction: column; gap: 8px; background: #020617; }
+        .bot-msg { background: #1e293b; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 85%; border: 1px solid #334155; }
+        .user-msg { background: #f59e0b; color: #0f172a; padding: 8px 12px; border-radius: 8px; align-self: flex-end; max-width: 85%; font-weight: 500; }
+        #nom-chat-input-area { display: flex; padding: 10px; background: #0f172a; border-top: 1px solid #334155; gap: 8px; }
+        #nom-user-input { flex: 1; background: #1e293b; border: 1px solid #334155; color: white; padding: 8px 10px; border-radius: 6px; font-size: 0.85rem; outline: none; }
+        #nom-user-input:focus { border-color: #f59e0b; }
+        #nom-chat-input-area button { background: #f59e0b; color: #0f172a; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+    </style>
+
     <!-- DATI STRUTTURATI SCHEMA.ORG (SEO LOCALE E GOOGLE MAPS) -->
     <script type="application/ld+json">
     {
@@ -215,7 +232,6 @@
     </main>
 
     <!-- POPUPS / MODALS -->
-    <!-- POPUP PREZZI ALL YOU CAN EAT -->
     <div class="modal" id="prices-modal" aria-hidden="true">
         <div class="modal-content">
             <button class="close-modal" id="close-prices-modal" aria-label="Chiudi">&times;</button>
@@ -232,7 +248,6 @@
         </div>
     </div>
 
-    <!-- POPUP APERISUSHI -->
     <div class="modal" id="aperi-modal" aria-hidden="true">
         <div class="modal-content">
             <button class="close-modal" id="close-aperi-modal" aria-label="Chiudi">&times;</button>
@@ -248,7 +263,6 @@
         </div>
     </div>
 
-    <!-- POPUP SCELTA PIATTAFORME DELIVERY -->
     <div class="modal" id="delivery-modal" aria-hidden="true">
         <div class="modal-content">
             <button class="close-modal" id="close-delivery-modal" aria-label="Chiudi">&times;</button>
@@ -256,13 +270,12 @@
             <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Seleziona dove preferisci effettuare il tuo ordine:</p>
             <div class="modal-buttons">
                 <a href="https://go.ordelivery.shop/#/restaurantPage?string_id=SZPTV" target="_blank" rel="noopener" class="btn btn-lg btn-accent">ORDINA CON ORDELIVERY</a>
-                <a href="https://www.justeat.it/restaurants-nom-sushi-vibes-genova/menu?serviceType=collection&amp;utm_source=google&amp;utm_medium=organic&amp;utm_campaign=foodorder" target="_blank" rel="noopener" class="btn btn-lg btn-outline-dark">ORDINA CON JUST EAT</a>
-                <a href="https://deliveroo.it/it/menu/genova/genova-centro/nom-sushi-vibes/?fulfillment_type=COLLECTION/" target="_blank" rel="noopener" class="btn btn-lg btn-outline-dark">ORDINA CON DELIVEROO</a>
+                <a href="https://www.justeat.it/restaurants-nom-sushi-vibes-genova/menu?serviceType=collection" target="_blank" rel="noopener" class="btn btn-lg btn-outline-dark">ORDINA CON JUST EAT</a>
+                <a href="https://deliveroo.it/it/menu/genova/genova-centro/nom-sushi-vibes/?fulfillment_type=COLLECTION" target="_blank" rel="noopener" class="btn btn-lg btn-outline-dark">ORDINA CON DELIVEROO</a>
             </div>
         </div>
     </div>
 
-    <!-- POPUP MAPPA GOOGLE -->
     <div class="modal" id="map-modal" aria-hidden="true">
         <div class="modal-content" style="max-width: 600px; padding: 25px 15px 15px 15px;">
             <button class="close-modal" id="close-map-modal" aria-label="Chiudi">&times;</button>
@@ -296,31 +309,99 @@
         </div>
     </footer>
 
-    <!-- JS (anti-cache) -->
+    <!-- JS PRINCIPALE (anti-cache) -->
     <script src="script.js?v=2.4"></script>
     
-    <!-- Widget Chat AI - Nom Sushi -->
-<div id="nom-chat-container">
-    <!-- Pulsante Fluttuante (Bolla) -->
-    <button id="nom-chat-toggle" onclick="toggleChat()">
-        Chat
-    </button>
+    <!-- WIDGET CHAT AI E LOGICA DI COMUNICAZIONE API -->
+    <div id="nom-chat-container">
+        <button id="nom-chat-toggle" onclick="toggleChat()">💬</button>
 
-    <!-- Finestra della Chat -->
-    <div id="nom-chat-box" class="hidden">
-        <div id="nom-chat-header">
-            <span>Nom Sushi Assistant </span>
-            <button onclick="toggleChat()" id="nom-chat-close">&times;</button>
-        </div>
-        <div id="nom-chat-messages">
-            <div class="bot-msg">Ciao! Benvenuto da <b>Nom Sushi Vibes</b> a Genova. Come posso aiutarti oggi con il menu o le prenotazioni?</div>
-        </div>
-        <div id="nom-chat-input-area">
-            <input type="text" id="nom-user-input" placeholder="Scrivi una domanda..." onkeypress="handleKeyPress(event)">
-            <button onclick="sendUserMessage()">Invia</button>
+        <div id="nom-chat-box" class="hidden">
+            <div id="nom-chat-header">
+                <span>Nom Sushi Assistant</span>
+                <button onclick="toggleChat()" id="nom-chat-close">&times;</button>
+            </div>
+            <div id="nom-chat-messages">
+                <div class="bot-msg">Ciao! Benvenuto da <b>Nom Sushi Vibes</b> a Genova. Come posso aiutarti oggi con il menu o le prenotazioni?</div>
+            </div>
+            <div id="nom-chat-input-area">
+                <input type="text" id="nom-user-input" placeholder="Scrivi una domanda..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendUserMessage()">Invia</button>
+            </div>
         </div>
     </div>
-</div>
+
+    <script>
+        function toggleChat() {
+            const box = document.getElementById('nom-chat-box');
+            box.classList.toggle('hidden');
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        }
+
+        async function sendUserMessage() {
+            const inputField = document.getElementById('nom-user-input');
+            const message = inputField.value.trim();
+            if (!message) return;
+
+            const messagesContainer = document.getElementById('nom-chat-messages');
+
+            // Mostra il messaggio dell'utente
+            messagesContainer.innerHTML += `<div class="user-msg"><b>Tu:</b> ${escapeHtml(message)}</div>`;
+            inputField.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Messaggio di caricamento temporaneo
+            const loadingId = 'loading-' + Date.now();
+            messagesContainer.innerHTML += `<div id="${loadingId}" class="bot-msg" style="color: #94a3b8; font-style: italic;">L'assistente sta scrivendo...</div>`;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+
+                const data = await response.json();
+                
+                // Rimuovi il messaggio di caricamento
+                const loadingEl = document.getElementById(loadingId);
+                if (loadingEl) loadingEl.remove();
+
+                if (response.ok) {
+                    let reply = data.reply || 'Nessuna risposta dal server.';
+                    
+                    // Formattazione basilare di grassetto e bottoni restituiti dall'AI
+                    reply = reply
+                        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+                        .replace(/\[BTN:PRENOTA\]/g, '<br><a href="#booking" style="display:inline-block; margin-top:6px; padding:4px 8px; background:#f59e0b; color:#0f172a; border-radius:4px; font-weight:bold; text-decoration:none; font-size:0.75rem;">📅 Prenota Tavolo</a>')
+                        .replace(/\[BTN:ORDELIVERY\]/g, '<br><a href="https://go.ordelivery.shop/#/restaurantPage?string_id=SZPTV" target="_blank" rel="noopener" style="display:inline-block; margin-top:6px; padding:4px 8px; background:#f59e0b; color:#0f172a; border-radius:4px; font-weight:bold; text-decoration:none; font-size:0.75rem;">🛵 Ordelivery</a>')
+                        .replace(/\[BTN:JUSTEAT\]/g, '<br><a href="https://www.justeat.it" target="_blank" rel="noopener" style="display:inline-block; margin-top:6px; padding:4px 8px; background:#f97316; color:white; border-radius:4px; font-weight:bold; text-decoration:none; font-size:0.75rem;">🍔 Just Eat</a>')
+                        .replace(/\[BTN:DELIVEROO\]/g, '<br><a href="https://deliveroo.it" target="_blank" rel="noopener" style="display:inline-block; margin-top:6px; padding:4px 8px; background:#06b6d4; color:#0f172a; border-radius:4px; font-weight:bold; text-decoration:none; font-size:0.75rem;">🦘 Deliveroo</a>')
+                        .replace(/\[BTN:MAPPA\]/g, '<br><a href="#location" style="display:inline-block; margin-top:6px; padding:4px 8px; background:#334155; color:white; border-radius:4px; text-decoration:none; font-size:0.75rem;">📍 Vedi Mappa</a>');
+
+                    messagesContainer.innerHTML += `<div class="bot-msg">${reply}</div>`;
+                } else {
+                    messagesContainer.innerHTML += `<div class="bot-msg" style="color: #ef4444;">Errore del server: ${data.error || 'Riprova'}</div>`;
+                }
+            } catch (err) {
+                const loadingEl = document.getElementById(loadingId);
+                if (loadingEl) loadingEl.remove();
+                messagesContainer.innerHTML += `<div class="bot-msg" style="color: #ef4444;">Errore di connessione al server.</div>`;
+            }
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
 </body>
 </html>
-
