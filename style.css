@@ -191,7 +191,6 @@ body::after {
     padding: 22px 20px;
     box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light);
     
-    /* Gestione animazione di apertura fluida */
     opacity: 0;
     visibility: hidden;
     transform: translateY(-12px) scale(0.96);
@@ -200,7 +199,6 @@ body::after {
     display: block;
 }
 
-/* Stato Attivo (Menu Aperto) */
 .nav-dropdown.active {
     opacity: 1;
     visibility: visible;
@@ -226,7 +224,6 @@ body::after {
     transition: all 0.2s ease;
 }
 
-/* Effetto al tocco sulle opzioni del menu */
 .nav-link:hover, .nav-link:active {
     color: var(--accent-color);
     box-shadow: var(--neu-pressed);
@@ -333,7 +330,6 @@ body::after {
     box-shadow: var(--neu-shadow);
 }
 
-/* Effetto pressione fisicamente scolpito */
 .btn:hover, .btn:active {
     transform: translateY(1px);
     box-shadow: var(--neu-pressed);
@@ -356,7 +352,6 @@ body::after {
     color: var(--dark-accent);
 }
 
-/* Neumorfismo con Colore Brand Accent */
 .btn-accent {
     background-color: var(--accent-color);
     color: #ffffff;
@@ -367,7 +362,6 @@ body::after {
     box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(255, 255, 255, 0.2);
 }
 
-/* Neumorfismo Scuro (Primary) */
 .btn-primary {
     background-color: var(--dark-accent);
     color: #ffffff;
@@ -378,12 +372,7 @@ body::after {
     box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
 }
 
-.btn-outline {
-    background-color: var(--bg-color);
-    color: var(--dark-accent);
-}
-
-.btn-outline-dark {
+.btn-outline, .btn-outline-dark {
     background-color: var(--bg-color);
     color: var(--dark-accent);
 }
@@ -425,7 +414,7 @@ body::after {
     font-weight: 600;
 }
 
-/* POPUP MODALE (SCHEDA NEUMORFICA) */
+/* POPUP MODALE */
 .modal {
     display: none;
     position: fixed;
@@ -510,17 +499,19 @@ body::after {
     }
 }
 
-/* Stili Widget Chat in armonia con il sito */
+/* ==========================================
+   WIDGET CHAT NEUMORFICO E PULITO
+   ========================================== */
 #nom-chat-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 9999;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-main);
 }
 
 #nom-chat-toggle {
-    background-color: var(--accent-color, #009245);
+    background-color: var(--accent-color);
     color: #ffffff;
     border: none;
     width: 55px;
@@ -528,7 +519,7 @@ body::after {
     border-radius: 50%;
     cursor: pointer;
     font-size: 20px;
-    box-shadow: 6px 6px 14px var(--neu-dark, #e2e0d8), -6px -6px 14px var(--neu-light, #ffffff);
+    box-shadow: var(--neu-shadow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -545,10 +536,10 @@ body::after {
     right: 0;
     width: 340px;
     height: 450px;
-    background: var(--bg-color, #faf9f6);
-    border: 1px solid var(--border-color, #eaeaea);
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
     border-radius: 22px;
-    box-shadow: 10px 10px 25px var(--neu-dark, #e2e0d8), -10px -10px 25px var(--neu-light, #ffffff);
+    box-shadow: 12px 12px 25px var(--neu-dark), -12px -12px 25px var(--neu-light);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -559,21 +550,21 @@ body::after {
 }
 
 #nom-chat-header {
-    background: var(--bg-color, #faf9f6);
-    color: var(--dark-accent, #111111);
+    background: var(--bg-color);
+    color: var(--dark-accent);
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
     font-size: 0.95rem;
-    border-bottom: 1px solid var(--border-color, #eaeaea);
+    border-bottom: 1px solid var(--border-color);
 }
 
 #nom-chat-close {
     background: none;
     border: none;
-    color: var(--text-muted, #666666);
+    color: var(--text-muted);
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -591,17 +582,17 @@ body::after {
 
 .bot-msg {
     background: #ffffff;
-    color: var(--text-color, #1a1a1a);
+    color: var(--text-color);
     align-self: flex-start;
     padding: 10px 14px;
     border-radius: 14px;
-    border: 1px solid var(--border-color, #eaeaea);
+    border: 1px solid var(--border-color);
     max-width: 85%;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.03);
 }
 
 .user-msg {
-    background: var(--accent-color, #009245);
+    background: var(--accent-color);
     color: #ffffff;
     align-self: flex-end;
     padding: 10px 14px;
@@ -613,28 +604,28 @@ body::after {
 #nom-chat-input-area {
     display: flex;
     padding: 12px;
-    background: var(--bg-color, #faf9f6);
-    border-top: 1px solid var(--border-color, #eaeaea);
+    background: var(--bg-color);
+    border-top: 1px solid var(--border-color);
     gap: 8px;
 }
 
 #nom-user-input {
     flex: 1;
     padding: 10px 12px;
-    border: 1px solid var(--border-color, #eaeaea);
+    border: 1px solid var(--border-color);
     background: #ffffff;
     border-radius: 30px;
     outline: none;
     font-size: 0.85rem;
-    color: var(--text-color, #1a1a1a);
+    color: var(--text-color);
 }
 
 #nom-user-input:focus {
-    border-color: var(--accent-color, #009245);
+    border-color: var(--accent-color);
 }
 
 #nom-chat-input-area button {
-    background: var(--accent-color, #009245);
+    background: var(--accent-color);
     color: #ffffff;
     border: none;
     padding: 8px 16px;
@@ -643,4 +634,22 @@ body::after {
     font-weight: 700;
     font-size: 0.85rem;
     box-shadow: 3px 3px 8px rgba(0, 146, 69, 0.2);
+}
+
+.chat-cta-btn {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 5px;
+    padding: 6px 12px;
+    background-color: var(--accent-color);
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.chat-cta-btn:hover {
+    background-color: var(--accent-hover);
 }
