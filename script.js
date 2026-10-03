@@ -189,6 +189,21 @@ async function sendUserMessage() {
     const text = inputField.value.trim();
     if (!text) return;
 
+    // Raccoglie la cronologia dei messaggi precedenti per inviarla al backend
+    const messageElements = messageContainer.querySelectorAll('.user-msg, .bot-msg');
+    let history = [];
+    
+    messageElements.forEach(el => {
+        if (el.classList.contains('user-msg')) {
+            history.push({ role: 'user', content: el.textContent });
+        } else if (el.classList.contains('bot-msg') && !el.id.startsWith('loading-')) {
+            let cleanText = el.textContent.replace(/🌐.*|📅.*|🛵.*|🍱.*|🍣.*|📍.*|📸.*|📘.*|🦉.*/g, '').trim();
+            if (cleanText && !cleanText.includes('Sto scrivendo')) {
+                history.push({ role: 'assistant', content: cleanText });
+            }
+        }
+    });
+
     // Mostra il messaggio dell'utente (sanificato)
     messageContainer.innerHTML += `<div class="user-msg">${escapeHtml(text)}</div>`;
     inputField.value = '';
@@ -203,7 +218,10 @@ async function sendUserMessage() {
         const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
+            body: JSON.stringify({ 
+                message: text,
+                history: history 
+            })
         });
 
         const data = await response.json();
@@ -228,7 +246,6 @@ async function sendUserMessage() {
 
 function formatBotMessage(text) {
     let formattedText = escapeHtml(text)
-        // Rimuove i tag tecnici per non mostrarli a schermo
         .replace(/\[ACTION:RESERVE\]/g, '')
         .replace(/\[ACTION:ORDER\]/g, '')
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
