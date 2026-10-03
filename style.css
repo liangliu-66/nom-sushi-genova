@@ -605,7 +605,7 @@ body::after {
     display: flex;
     padding: 12px;
     background: var(--bg-color);
-    border-top: 1px solid var(--border-color);
+    border-top: 2px solid #a0a0a0;
     gap: 8px;
 }
 

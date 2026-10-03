@@ -35,7 +35,7 @@
     <!-- CSS (con Anti-Cache) -->
     <link rel="stylesheet" href="style.css?v=2.4">
 
-    <!-- DATI STRUTTURATI SCHEMA.ORG (SEO LOCALE E GOOGLE MAPS) -->
+    <!-- DATI STRUTTURATI SCHEMA.ORG -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -59,27 +59,7 @@
         "@type": "GeoCoordinates",
         "latitude": 44.4074495,
         "longitude": 8.937213
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "12:00",
-          "closes": "15:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "19:00",
-          "closes": "23:30"
-        }
-      ],
-      "hasMenu": "https://nomsushi.it/#menu",
-      "acceptsReservations": "True",
-      "sameAs": [
-        "https://www.facebook.com/nomsushi",
-        "https://www.instagram.com/nom_sushi_genova/"
-      ]
+      }
     }
     </script>
 </head>
@@ -111,7 +91,7 @@
     </header>
 
     <main>
-        <!-- HERO SECTION (Con H1 principale e Immagine WebP) -->
+        <!-- HERO SECTION -->
         <section id="about" class="hero section">
             <div class="container hero-content">
                 <div class="logo-wrapper">
@@ -124,42 +104,48 @@
                     Da NOM uniamo la tradizione giapponese con influenze contemporanee. Materie prime freschissime, cura nei dettagli e un'atmosfera chic pensata per farti vivere serate indimenticabili nel cuore di Genova.
                 </p>
                 
+                <!-- RIPRISTINATI I 3 RIQUADRI INIZIALI -->
                 <div class="features-grid">
-                    <!-- Card All You Can Eat -->
                     <article class="feature-card">
                         <div class="icon" aria-hidden="true">🍱</div>
                         <h2>All You Can Eat</h2>
                         <p>Formula ricca e di altissima qualità sia a pranzo che a cena.</p>
-                        <button class="btn btn-outline-sm" id="open-prices-modal" style="margin-top: 10px;">Prezzi</button>
+                        <!-- Questo bottoncino aprirà lo stesso popup dei prezzi -->
+                        <button class="btn btn-outline-sm" id="open-prices-modal" style="margin-top: 10px;" onclick="document.getElementById('prices-modal').classList.add('active')">Prezzi</button>
                     </article>
 
-                    <!-- Card Alla Carta -->
                     <article class="feature-card">
                         <div class="icon" aria-hidden="true">🍣</div>
                         <h2>Alla Carta</h2>
                         <p>Una selezione esclusiva di roll speciali, sashimi e piatti gourmet.</p>
                     </article>
 
-                    <!-- Card Cocktail Lounge -->
                     <article class="feature-card">
                         <div class="icon" aria-hidden="true">🍸</div>
                         <h2>Cocktail Lounge</h2>
                         <p>Drink ricercati studiati per abbinarsi perfettamente al nostro sushi.</p>
+                        <!-- Questo bottoncino aprirà il popup aperisushi -->
                         <button class="btn btn-outline-sm" id="open-aperi-modal" style="margin-top: 10px;">Aperisushi</button>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- MENU DIGITALI -->
+        <!-- MENU DIGITALI E PREZZI -->
         <section id="menu" class="section">
             <div class="container">
                 <h2 class="section-title">I Nostri <span>Menu Digitali</span></h2>
                 <div class="buttons-stack">
-                    <a href="pdf/menu-sushi-pranzo-genova-nom.pdf" target="_blank" rel="noopener" class="btn btn-xl btn-menu">
+                    <!-- PREZZI: Tasto Nero che apre il pop-up modale -->
+                    <button class="btn btn-xl btn-primary" onclick="document.getElementById('prices-modal').classList.add('active')">
+                        PREZZI
+                    </button>
+                    <!-- MENU PRANZO: Tasto Verde -->
+                    <a href="pdf/menu-sushi-pranzo-genova-nom.pdf" target="_blank" rel="noopener" class="btn btn-xl btn-accent">
                         MENU PRANZO
                     </a>
-                    <a href="pdf/menu-sushi-cena-genova-nom.pdf" target="_blank" rel="noopener" class="btn btn-xl btn-menu btn-accent">
+                    <!-- MENU CENA: Tasto Verde -->
+                    <a href="pdf/menu-sushi-cena-genova-nom.pdf" target="_blank" rel="noopener" class="btn btn-xl btn-accent">
                         MENU CENA
                     </a>
                 </div>
@@ -171,6 +157,7 @@
             <div class="container">
                 <h2 class="section-title">Prenota il tuo <span>Tavolo</span></h2>
                 <div class="buttons-stack">
+                    <!-- RISERVA UN TAVOLO: Tasto Nero -->
                     <a href="https://www.nomsushi.shop/?action=reserve" target="_blank" rel="noopener" class="btn btn-xl btn-primary">
                         RISERVA UN TAVOLO
                     </a>
@@ -183,7 +170,8 @@
             <div class="container">
                 <h2 class="section-title">Asporto &amp; <span>Delivery</span></h2>
                 <div class="buttons-stack">
-                    <button class="btn btn-xl btn-outline" id="open-delivery-modal">
+                    <!-- ORDINA ONLINE: Tasto Verde -->
+                    <button class="btn btn-xl btn-accent" id="open-delivery-modal">
                         ORDINA ONLINE
                     </button>
                 </div>
@@ -215,33 +203,73 @@
     </main>
 
     <!-- POPUPS / MODALS -->
+    
+    <!-- POPUP PREZZI (Con tabella calendario) -->
     <div class="modal" id="prices-modal" aria-hidden="true">
-        <div class="modal-content">
-            <button class="close-modal" id="close-prices-modal" aria-label="Chiudi">&times;</button>
-            <h3>Prezzi <span>All You Can Eat</span></h3>
-            <div class="modal-info-list" style="text-align: left; margin: 20px 0; font-size: 0.95rem; line-height: 1.8;">
-                <p style="font-weight: bold; color: var(--accent-color); font-size: 1.05rem;">PRANZO (12:00 - 15:00)</p>
-                <p><strong>Lunedì - Venerdì:</strong> 18,90 €</p>
-                <p><strong>Sabato - Domenica:</strong> 20,90 €</p>
-                <p><strong>Lunch Box (Lun-Ven):</strong> 13,90 €</p>
-                <p><strong>Menu Bimbi (< 1,20m):</strong> 10,90 € <br><span style="color: var(--accent-color); font-size: 0.9rem;">(Promo Weekend Sab-Dom: <strong>5,00 €</strong>)</span></p>
-                
-                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 15px 0;">
-                
-                <p style="font-weight: bold; color: var(--accent-color); font-size: 1.05rem;">CENA (19:00 - 23:30)</p>
-                <p><strong>Lunedì - Giovedì:</strong> 28,90 €</p>
-                <p><strong>Venerdì - Domenica:</strong> 30,90 €</p>
-                <p><strong>Menu Bimbi (< 1,20m):</strong> 15,90 €</p>
-                
-                <div style="background: rgba(255, 99, 71, 0.1); padding: 8px; border-radius: 6px; margin-top: 10px;">
-                    <p style="font-size: 0.85rem; color: var(--accent-color); margin: 0;"><strong>🕙 Promo Early Dinner (Ven - Dom): -10%</strong><br>Entrando dalle 19:00 alle 20:00</p>
-                </div>
-
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px;">*Tutti i prezzi si intendono con il coperto incluso.</p>
+        <!-- Modificato il max-width per contenere bene la tabella -->
+        <div class="modal-content" style="max-width: 700px; width: 95%; padding: 25px 15px;">
+            <!-- Assicuriamoci che la X chiuda il popup anche se cliccato dal nuovo tasto -->
+            <button class="close-modal" id="close-prices-modal" aria-label="Chiudi" onclick="document.getElementById('prices-modal').classList.remove('active')">&times;</button>
+            <h3 style="margin-bottom: 20px;">Palinsesto <span>Settimanale</span></h3>
+            
+            <div style="overflow-x: auto; width: 100%; border-radius: 8px;">
+                <table style="width: 100%; min-width: 500px; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 10px; background: #1a1a1a; color: #fff;">Giorni</th>
+                            <th style="padding: 10px; background: #f26b3a; color: #fff;">PRANZO</th>
+                            <th style="padding: 10px; background: #19385c; color: #fff;">CENA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px; font-weight: 700;">Lunedì - Giovedì</td>
+                            <td style="padding: 12px; line-height: 1.6;">
+                                Smart: <strong>18,90 €</strong><br>
+                                Lunch Box: <strong>13,90 €</strong><br>
+                                Bimbi: <strong>10,90 €</strong>
+                            </td>
+                            <td style="padding: 12px; line-height: 1.6;">
+                                Aperisushi: <strong>13,90 €</strong><br>
+                                Smart: <strong>28,90 €</strong><br>
+                                Bimbi: <strong>15,90 €</strong>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px; font-weight: 700;">Venerdì</td>
+                            <td style="padding: 12px; line-height: 1.6;">
+                                Smart: <strong>18,90 €</strong><br>
+                                Lunch Box: <strong>13,90 €</strong><br>
+                                Bimbi: <strong>10,90 €</strong>
+                            </td>
+                            <td style="padding: 12px; line-height: 1.6;">
+                                Aperisushi: <strong>13,90 €</strong><br>
+                                Smart: <strong>30,90 €</strong><br>
+                                Early Dinner: <strong style="color: #c62828;">-10%</strong><br>
+                                Bimbi: <strong>15,90 €</strong>
+                            </td>
+                        </tr>
+                        <tr style="background: #fffcf5;">
+                            <td style="padding: 12px; font-weight: 700;">Sabato - Domenica</td>
+                            <td style="padding: 12px; line-height: 1.6;">
+                                Smart: <strong>20,90 €</strong><br>
+                                Bimbi: <strong style="color: #d32f2f;">5,00 €</strong>
+                            </td>
+                            <td style="padding: 12px; line-height: 1.6;">
+                                Aperisushi: <strong>13,90 €</strong><br>
+                                Smart: <strong>30,90 €</strong><br>
+                                Early Dinner: <strong style="color: #c62828;">-10%</strong><br>
+                                Bimbi: <strong>15,90 €</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <p style="text-align: right; font-size: 0.8rem; color: var(--text-muted); margin-top: 15px;">*Tutti i prezzi includono il coperto.</p>
         </div>
     </div>
 
+    <!-- POPUP APERISUSHI -->
     <div class="modal" id="aperi-modal" aria-hidden="true">
         <div class="modal-content">
             <button class="close-modal" id="close-aperi-modal" aria-label="Chiudi">&times;</button>
@@ -258,6 +286,7 @@
         </div>
     </div>
 
+    <!-- POPUP DELIVERY -->
     <div class="modal" id="delivery-modal" aria-hidden="true">
         <div class="modal-content">
             <button class="close-modal" id="close-delivery-modal" aria-label="Chiudi">&times;</button>
@@ -271,6 +300,7 @@
         </div>
     </div>
 
+    <!-- POPUP MAPPA -->
     <div class="modal" id="map-modal" aria-hidden="true">
         <div class="modal-content" style="max-width: 600px; padding: 25px 15px 15px 15px;">
             <button class="close-modal" id="close-map-modal" aria-label="Chiudi">&times;</button>
