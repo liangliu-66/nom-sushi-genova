@@ -537,9 +537,9 @@ body::after {
     width: 340px;
     height: 450px;
     background: var(--bg-color);
-    border: 1px solid var(--border-color);
+    border: 2px solid #444444; /* Bordo esterno scurito e ben visibile */
     border-radius: 22px;
-    box-shadow: 12px 12px 25px var(--neu-dark), -12px -12px 25px var(--neu-light);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); /* Ombra più profonda */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -558,7 +558,7 @@ body::after {
     align-items: center;
     font-weight: 700;
     font-size: 0.95rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid #444444; /* Linea di separazione dell'header scurita */
 }
 
 #nom-chat-close {
@@ -605,14 +605,14 @@ body::after {
     display: flex;
     padding: 12px;
     background: var(--bg-color);
-    border-top: 2px solid #a0a0a0;
+    border-top: 2px solid #444444; /* Linea di separazione inferiore scurita */
     gap: 8px;
 }
 
 #nom-user-input {
     flex: 1;
     padding: 10px 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #888888; /* Bordo dell'input di scrittura scurito */
     background: #ffffff;
     border-radius: 30px;
     outline: none;
