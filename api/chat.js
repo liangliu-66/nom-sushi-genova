@@ -1,4 +1,94 @@
-const completion = await openai.chat.completions.create({
+const { createClient } = require('@supabase/supabase-js');
+const OpenAI = require('openai');
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+module.exports = async (req, res) => {
+  // Gestione CORS
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Metodo non consentito' });
+  }
+
+  try {
+    // Parsing sicuro del corpo della richiesta
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        body = {};
+      }
+    }
+
+    const { message } = body || {};
+
+    if (!message) {
+      return res.status(400).json({ error: 'Messaggio mancante' });
+    }
+
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: 'Chiave OpenAI non configurata nelle variabili d\'ambiente.' });
+    }
+
+    const openai = new OpenAI({ apiKey });
+
+    let restaurantData = null;
+    let menuItems = [];
+    let promoItems = [];
+
+    const { data: restData, error: restErr } = await supabase.from('restaurants').select('allow_takeaway, allow_delivery, allow_reservations').limit(1).maybeSingle();
+    if (!restErr && restData) restaurantData = restData;
+
+    const { data: prodData, error: prodErr } = await supabase.from('products').select('*');
+    if (!prodErr && prodData) menuItems = prodData;
+
+    const { data: promoData, error: promoErr } = await supabase.from('promotions').select('*');
+    if (!promoErr && promoData) promoItems = promoData;
+
+    const allowTakeaway = restaurantData?.allow_takeaway ?? true;
+    const allowDelivery = restaurantData?.allow_delivery ?? true;
+
+    let platformStatusContext = `STATO PIATTAFORMA ATTUALE:\n`;
+    platformStatusContext += `- Ritiro d'asporto interno: ${allowTakeaway ? 'ATTIVO' : 'DISATTIVATO'}\n`;
+    platformStatusContext += `- Consegna a domicilio interna: ${allowDelivery ? 'ATTIVA' : 'DISATTIVATA'}\n`;
+
+    let menuContext = "MENU E PRODOTTI AGGIORNATI DAL DATABASE:\n";
+    if (menuItems.length > 0) {
+      menuItems.forEach((item) => {
+        const name = item.name || 'Prodotto';
+        const desc = item.description || item.ingredients || 'N/D';
+        const price = item.price !== undefined ? `€${item.price}` : '';
+        menuContext += `- ${name} | Descrizione: ${desc} | Prezzo: ${price}\n`;
+      });
+    } else {
+      menuContext += "Nessun prodotto trovato nel database.\n";
+    }
+
+    let promoContext = "\nPROMOZIONI E SCONTI ATTIVI:\n";
+    if (promoItems.length > 0) {
+      promoItems.forEach((p) => {
+        promoContext += `- ${p.title || p.name}: ${p.description || ''}\n`;
+      });
+    } else {
+      promoContext += "Nessuna promozione speciale attiva al momento.\n";
+    }
+
+    const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
@@ -58,3 +148,12 @@ REGOLE PER I BOTTONI E LE AZIONI:
       max_tokens: 350,
       temperature: 0.7
     });
+
+    const reply = completion.choices[0].message.content;
+    return res.json({ reply });
+
+  } catch (err) {
+    console.error('Errore API Chat:', err);
+    return res.status(500).json({ error: err.message || 'Errore interno del server' });
+  }
+};
